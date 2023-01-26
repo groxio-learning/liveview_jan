@@ -1,5 +1,5 @@
 defmodule Amnesia.Counter do
-  defstruct [count: 0]
+  defstruct count: 0
 
   def new do
     %__MODULE__{}
