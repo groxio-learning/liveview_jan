@@ -2,3 +2,4 @@
 - John Hitz
 - Cornelia Kelinske
 - Chris M
+- Bill Tihen
