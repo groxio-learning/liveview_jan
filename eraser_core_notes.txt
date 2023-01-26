@@ -1,0 +1,387 @@
+batate~/pp_liveview/pento % iex              
+Erlang/OTP 25 [erts-13.1.3] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit]
+
+Interactive Elixir (1.14.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> """
+...(1)> do fun things with big loud workerbees
+...(1)> """
+"do fun things with big loud workerbees\n"
+iex(2)> """
+...(2)> do f__ th___s w__h bi_ _ou_ w____bees   
+...(2)> """
+"do f__ th___s w__h bi_ _ou_ w____bees\n"
+iex(3)> """
+...(3)> _____________________________________
+...(3)> """
+"_____________________________________\n"
+iex(4)> text = "do fun things with big loud workerbees" 
+"do fun things with big loud workerbees"
+iex(5)> steps = 3
+3
+iex(6)> text |> String.graphemes
+["d", "o", " ", "f", "u", "n", " ", "t", "h", "i", "n", "g", "s", " ", "w", "i",
+ "t", "h", " ", "b", "i", "g", " ", "l", "o", "u", "d", " ", "w", "o", "r", "k",
+ "e", "r", "b", "e", "e", "s"]
+iex(7)> text   
+"do fun things with big loud workerbees"
+iex(8)> plan = length(text)
+** (ArgumentError) errors were found at the given arguments:
+
+  * 1st argument: not a list
+
+    :erlang.length("do fun things with big loud workerbees")
+    iex:8: (file)
+iex(8)> plan = String.length(text)
+38
+iex(9)> plan = 1..(String.length(text) + 1)
+1..39
+iex(10)> plan = 1..(String.length(text))    
+1..38
+iex(11)> plan = 1..String.length(text)  
+1..38
+iex(12)> plan = 1..String.length(text) |> Enum.shuffle
+[24, 30, 23, 3, 31, 25, 10, 15, 35, 2, 4, 27, 28, 26, 5, 20, 13, 7, 9, 32, 18,
+ 1, 34, 38, 11, 36, 17, 14, 29, 6, 19, 33, 16, 12, 22, 21, 8, 37]
+iex(13)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(3)
+[
+  [20, 15, 22],
+  [19, 7, 9],
+  [31, 14, 30],
+  [23, 35, 33],
+  '\v $',
+  '"\r&',
+  [37, 5, 1],
+  [21, 6, 18],
+  [3, 16, 8],
+  [26, 24, 27],
+  [28, 25, 17],
+  [29, 10, 2],
+  [12, 4]
+]
+iex(14)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(13)
+[
+  [26, 4, 2, 32, 34, 20, 29, 11, 23, 10, 5, 35, 33],
+  [36, 22, 12, 6, 16, 18, 31, 28, 30, 24, 9, 21, 17],
+  [37, 7, 38, 13, 14, 25, 19, 3, 8, 15, 1, 27]
+]
+iex(15)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(:ceil(String.length(13)))
+** (SyntaxError) iex:15:72: syntax error before: '('
+    |
+ 15 | plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(:ceil(String.length(13)))
+    |                                                                        ^
+    (iex 1.14.2) lib/iex/evaluator.ex:292: IEx.Evaluator.parse_eval_inspect/3
+    (iex 1.14.2) lib/iex/evaluator.ex:187: IEx.Evaluator.loop/1
+    (iex 1.14.2) lib/iex/evaluator.ex:32: IEx.Evaluator.init/4
+    (stdlib 4.2) proc_lib.erl:240: :proc_lib.init_p_do_apply/3
+iex(15)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(:ceil.(String.length(13)))
+** (CompileError) iex:15: invalid function call :ceil.()
+    (elixir 1.14.2) src/elixir_expand.erl:587: :elixir_expand.expand_arg/3
+    (elixir 1.14.2) src/elixir_expand.erl:603: :elixir_expand.mapfold/5
+    (elixir 1.14.2) src/elixir_expand.erl:867: :elixir_expand.expand_remote/8
+    (elixir 1.14.2) expanding macro: Kernel.|>/2
+    iex:15: (file)
+iex(15)> :c
+c               calendar        cerl            cerl_clauses    
+cerl_inline     cerl_trees      code            code_server     
+compile         core_lib        core_lint       core_parse      
+core_pp         core_scan       counters        
+iex(15)> ceil(39)
+39
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(ceil(String.length(13)))  
+** (FunctionClauseError) no function clause matching in String.length/1    
+    
+    The following arguments were given to String.length/1:
+    
+        # 1
+        13
+    
+    Attempted function clauses (showing 1 out of 1):
+    
+        def length(string) when is_binary(string)
+    
+    (elixir 1.14.2) lib/string.ex:2017: String.length/1
+    iex:16: (file)
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> :/(String.length())     
+...(16)> )
+** (SyntaxError) iex:16:77: syntax error before: '('
+    |
+ 16 | plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> :/(String.length())
+    |                                                                             ^
+    (iex 1.14.2) lib/iex/evaluator.ex:292: IEx.Evaluator.parse_eval_inspect/3
+    (iex 1.14.2) lib/iex/evaluator.ex:187: IEx.Evaluator.loop/1
+    (iex 1.14.2) lib/iex/evaluator.ex:32: IEx.Evaluator.init/4
+    (stdlib 4.2) proc_lib.erl:240: :proc_lib.init_p_do_apply/3
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> String)            
+String      StringIO    
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> String.length :/ 13)
+** (SyntaxError) iex:16:92: syntax error before: "13"
+    |
+ 16 | plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> String.length :/ 13)
+    |                                                                                            ^
+    (iex 1.14.2) lib/iex/evaluator.ex:292: IEx.Evaluator.parse_eval_inspect/3
+    (iex 1.14.2) lib/iex/evaluator.ex:187: IEx.Evaluator.loop/1
+    (iex 1.14.2) lib/iex/evaluator.ex:32: IEx.Evaluator.init/4
+    (stdlib 4.2) proc_lib.erl:240: :proc_lib.init_p_do_apply/3
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> String.length |> :/(13))
+** (SyntaxError) iex:16:94: syntax error before: '('
+    |
+ 16 | plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(text |> String.length |> :/(13))
+    |                                                                                              ^
+    (iex 1.14.2) lib/iex/evaluator.ex:292: IEx.Evaluator.parse_eval_inspect/3
+    (iex 1.14.2) lib/iex/evaluator.ex:187: IEx.Evaluator.loop/1
+    (iex 1.14.2) lib/iex/evaluator.ex:32: IEx.Evaluator.init/4
+    (stdlib 4.2) proc_lib.erl:240: :proc_lib.init_p_do_apply/3
+iex(16)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(ceil(String.length(text) / steps) )
+[
+  [11, 17, 22, 28, 8, 36, 6, 35, 29, 31, 33, 4, 1],
+  [37, 32, 15, 14, 16, 5, 10, 12, 19, 18, 30, 25, 20],
+  [13, 26, 2, 34, 21, 3, 27, 9, 23, 24, 38, 7]
+]
+iex(17)> Kernel.
+!/1                     !=/2                    !==/2                   
+&&/2                    **/2                    */2                     
+++/2                    +/1                     +/2                     
+--/2                    -/1                     -/2                     
+..///3                  ../0                    ../2                    
+//2                     </2                     <=/2                    
+<>/2                    ==/2                    ===/2                   
+=~/2                    >/2                     >=/2                    
+@/1                     CLI                     ErrorHandler            
+LexicalTracker          ParallelCompiler        ParallelRequire         
+SpecialForms            Typespec                Utils                   
+abs/1                   alias!/1                and/2                   
+apply/2                 apply/3                 binary_part/3           
+binary_slice/2          binary_slice/3          binding/0               
+binding/1               bit_size/1              byte_size/1             
+ceil/1                  dbg/0                   dbg/1                   
+dbg/2                   def/1                   def/2                   
+defdelegate/2           defexception/1          defguard/1              
+defguardp/1             defimpl/2               defimpl/3               
+defmacro/1              defmacro/2              defmacrop/1             
+defmacrop/2             defmodule/2             defoverridable/1        
+defp/1                  defp/2                  defprotocol/2           
+defstruct/1             destructure/2           div/2                   
+elem/2                  exit/1                  floor/1                 
+function_exported?/3    get_and_update_in/2     get_and_update_in/3     
+get_in/2                hd/1                    if/2                    
+in/2                    inspect/1               inspect/2               
+is_atom/1               is_binary/1             is_bitstring/1          
+is_boolean/1            is_exception/1          is_exception/2          
+is_float/1              is_function/1           is_function/2           
+is_integer/1            is_list/1               is_map/1                
+is_map_key/2            is_nil/1                is_number/1             
+is_pid/1                is_port/1               is_reference/1          
+is_struct/1             is_struct/2             is_tuple/1              
+length/1                macro_exported?/3       make_ref/0              
+map_size/1              match?/2                max/2                   
+min/2                   node/0                  node/1                  
+not/1                   or/2                    pop_in/1                
+pop_in/2                put_elem/3              put_in/2                
+put_in/3                raise/1                 raise/2                 
+rem/2                   reraise/2               reraise/3               
+round/1                 self/0                  send/2                  
+sigil_C/2               sigil_D/2               sigil_N/2               
+sigil_R/2               sigil_S/2               sigil_T/2               
+sigil_U/2               sigil_W/2               sigil_c/2               
+sigil_r/2               sigil_s/2               sigil_w/2               
+spawn/1                 spawn/3                 spawn_link/1            
+spawn_link/3            spawn_monitor/1         spawn_monitor/3         
+struct!/1               struct!/2               struct/1                
+struct/2                tap/2                   then/2                  
+throw/1                 tl/1                    to_charlist/1           
+to_string/1             trunc/1                 tuple_size/1            
+unless/2                update_in/2             update_in/3             
+use/1                   use/2                   var!/1                  
+var!/2                  |>/2                    ||/2                    
+
+iex(17)> text = "do fun things with big loud workerbees"                                                      
+"do fun things with big loud workerbees"
+iex(18)> steps = 3                                                                                            
+3
+iex(19)> plan = 1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(ceil(String.length(text) / steps) )
+[
+  [4, 1, 13, 37, 11, 24, 21, 28, 29, 23, 34, 25, 32],
+  [15, 8, 3, 9, 20, 27, 5, 12, 6, 18, 36, 10, 31],
+  [2, 22, 35, 14, 30, 33, 17, 26, 19, 16, 38, 7]
+]
+iex(20)> eraser = %{text: text, plan: plan}
+%{
+  plan: [
+    [4, 1, 13, 37, 11, 24, 21, 28, 29, 23, 34, 25, 32],
+    [15, 8, 3, 9, 20, 27, 5, 12, 6, 18, 36, 10, 31],
+    [2, 22, 35, 14, 30, 33, 17, 26, 19, 16, 38, 7]
+  ],
+  text: "do fun things with big loud workerbees"
+}
+iex(21)> for str <- String.graphemes(text), do: str
+["d", "o", " ", "f", "u", "n", " ", "t", "h", "i", "n", "g", "s", " ", "w", "i",
+ "t", "h", " ", "b", "i", "g", " ", "l", "o", "u", "d", " ", "w", "o", "r", "k",
+ "e", "r", "b", "e", "e", "s"]
+iex(22)> Enum.zip(1..39, String.graphemes(text))               
+[
+  {1, "d"},
+  {2, "o"},
+  {3, " "},
+  {4, "f"},
+  {5, "u"},
+  {6, "n"},
+  {7, " "},
+  {8, "t"},
+  {9, "h"},
+  {10, "i"},
+  {11, "n"},
+  {12, "g"},
+  {13, "s"},
+  {14, " "},
+  {15, "w"},
+  {16, "i"},
+  {17, "t"},
+  {18, "h"},
+  {19, " "},
+  {20, "b"},
+  {21, "i"},
+  {22, "g"},
+  {23, " "},
+  {24, "l"},
+  {25, "o"},
+  {26, "u"},
+  {27, "d"},
+  {28, " "},
+  {29, "w"},
+  {30, "o"},
+  {31, "r"},
+  {32, "k"},
+  {33, "e"},
+  {34, "r"},
+  {35, "b"},
+  {36, "e"},
+  {37, "e"},
+  {38, "s"}
+]
+iex(23)> Enum.zip(1..38, String.graphemes(text))
+[
+  {1, "d"},
+  {2, "o"},
+  {3, " "},
+  {4, "f"},
+  {5, "u"},
+  {6, "n"},
+  {7, " "},
+  {8, "t"},
+  {9, "h"},
+  {10, "i"},
+  {11, "n"},
+  {12, "g"},
+  {13, "s"},
+  {14, " "},
+  {15, "w"},
+  {16, "i"},
+  {17, "t"},
+  {18, "h"},
+  {19, " "},
+  {20, "b"},
+  {21, "i"},
+  {22, "g"},
+  {23, " "},
+  {24, "l"},
+  {25, "o"},
+  {26, "u"},
+  {27, "d"},
+  {28, " "},
+  {29, "w"},
+  {30, "o"},
+  {31, "r"},
+  {32, "k"},
+  {33, "e"},
+  {34, "r"},
+  {35, "b"},
+  {36, "e"},
+  {37, "e"},
+  {38, "s"}
+]
+iex(24)> to_erase = hd(plan)
+[4, 1, 13, 37, 11, 24, 21, 28, 29, 23, 34, 25, 32]
+iex(25)> chars_with_index = Enum.zip(1..38, String.graphemes(text))
+[
+  {1, "d"},
+  {2, "o"},
+  {3, " "},
+  {4, "f"},
+  {5, "u"},
+  {6, "n"},
+  {7, " "},
+  {8, "t"},
+  {9, "h"},
+  {10, "i"},
+  {11, "n"},
+  {12, "g"},
+  {13, "s"},
+  {14, " "},
+  {15, "w"},
+  {16, "i"},
+  {17, "t"},
+  {18, "h"},
+  {19, " "},
+  {20, "b"},
+  {21, "i"},
+  {22, "g"},
+  {23, " "},
+  {24, "l"},
+  {25, "o"},
+  {26, "u"},
+  {27, "d"},
+  {28, " "},
+  {29, "w"},
+  {30, "o"},
+  {31, "r"},
+  {32, "k"},
+  {33, "e"},
+  {34, "r"},
+  {35, "b"},
+  {36, "e"},
+  {37, "e"},
+  {38, "s"}
+]
+iex(26)> for {index, str} <- chars_with_index do                              
+...(26)>   if index in to_erase, do: "_", else: str                
+...(26)> end
+["_", "o", " ", "_", "u", "n", " ", "t", "h", "i", "_", "g", "_", " ", "w", "i",
+ "t", "h", " ", "b", "_", "g", "_", "_", "_", "u", "d", "_", "_", "o", "r", "_",
+ "e", "_", "b", "e", "_", "s"]
+iex(27)> replace = fn {index, str}, to_erase ->    
+...(27)>   cond do
+...(27)>     str == " " -> " "    
+...(27)>     index in to_erase -> "_"
+...(27)>     true -> str
+...(27)>   end
+...(27)> end |> Enum.join
+** (Protocol.UndefinedError) protocol String.Chars not implemented for {:cont, false} of type Tuple
+    (elixir 1.14.2) lib/string/chars.ex:3: String.Chars.impl_for!/1
+    (elixir 1.14.2) lib/string/chars.ex:22: String.Chars.to_string/1
+    (elixir 1.14.2) lib/enum.ex:1662: anonymous fn/3 in Enum.map/2
+    (elixir 1.14.2) lib/enum.ex:4307: anonymous fn/3 in Enum.map/2
+    (elixir 1.14.2) lib/enum.ex:1965: Enum.member?/2
+    iex:30: (file)
+    iex:33: (file)
+iex(27)> replace = fn {index, str}, to_erase ->  
+...(27)>   cond do                               
+...(27)>     str == " " -> " "                   
+...(27)>     index in to_erase -> "_"            
+...(27)>     true -> str                         
+...(27)>   end
+...(27)> end
+#Function<41.3316493/2 in :erl_eval.expr/6>
+iex(28)> for {index, str} <- chars_with_index, do: replace.({index, str}, to_erase)
+["_", "o", " ", "_", "u", "n", " ", "t", "h", "i", "_", "g", "_", " ", "w", "i",
+ "t", "h", " ", "b", "_", "g", " ", "_", "_", "u", "d", " ", "_", "o", "r", "_",
+ "e", "_", "b", "e", "_", "s"]
+iex(29)> for {index, str} <- chars_with_index, do: replace.({index, str}, to_erase) |> Enum.join
+** (Protocol.UndefinedError) protocol Enumerable not implemented for "_" of type BitString
+    (elixir 1.14.2) lib/enum.ex:1: Enumerable.impl_for!/1
+    (elixir 1.14.2) lib/enum.ex:166: Enumerable.reduce/3
+    (elixir 1.14.2) lib/enum.ex:4307: Enum.map/2
+    (elixir 1.14.2) lib/enum.ex:1617: Enum.join/2
+    iex:29: (file)
+    iex:29: (file)
+iex(29)> (for {index, str} <- chars_with_index, do: replace.({index, str}, to_erase)) |> Enum.join
+"_o _un thi_g_ with b_g __ud _or_e_be_s"
