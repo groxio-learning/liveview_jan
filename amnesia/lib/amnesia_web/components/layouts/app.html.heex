@@ -15,19 +15,15 @@
     </div>
     <div class="flex items-center gap-4">
       <%= if @current_user do %>
+        <%= @current_user.email %>
 
-          <%= @current_user.email %>
+        <.link href={~p"/users/settings"}>Settings</.link>
 
-
-          <.link href={~p"/users/settings"}>Settings</.link>
-
-
-          <.link href={~p"/users/log_out"} method="delete">Log out</.link>
+        <.link href={~p"/users/log_out"} method="delete">Log out</.link>
       <% else %>
+        <.link href={~p"/users/register"}>Register</.link>
 
-          <.link href={~p"/users/register"}>Register</.link>
-
-          <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/users/log_in"}>Log in</.link>
       <% end %>
     </div>
   </div>
