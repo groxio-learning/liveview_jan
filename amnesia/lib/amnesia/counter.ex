@@ -1,8 +1,8 @@
 defmodule Amnesia.Counter do
   defstruct count: 0
 
-  def new do
-    %__MODULE__{}
+  def new(initial \\ 0) do
+    %__MODULE__{count: initial}
   end
 
   def increment(%__MODULE__{count: count}) do

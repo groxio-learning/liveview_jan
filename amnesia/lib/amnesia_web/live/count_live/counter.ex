@@ -2,40 +2,36 @@ defmodule AmnesiaWeb.CountLive.Counter do
   use Phoenix.LiveComponent
   alias Amnesia.Counter
 
+  def update(assigns, socket) do
+    socket =
+      socket
+      |> assign(assigns)
+      |> assign_counter()
+      |> assign_image(assigns)
 
-  def update(%{class: class,
-  id: id,
-  initial_count: count,
-  title: title} = assigns, socket) do
-
-    socket = socket
-    |> assign_count()
-    |> assign(:count, String.to_integer(count))
-    |> assign(:class, class)
-    |> assign(:title, title)
-    |> assign_image(assigns)
-
-
-  {:ok, socket}
+    {:ok, socket}
   end
 
-  def assign_count(socket) do
-    assign(socket, counter: Counter.new())
+  def assign_counter(socket) do
+    assign(socket, counter: Counter.new(socket.assigns.count))
   end
 
   def assign_image(socket, %{image: image}) do
     assign(socket, :image, image)
   end
 
-  def assign_image(socket,_) do
+  def assign_image(socket, _) do
     socket
   end
-
 
   attr(:title, :string, required: true)
   attr(:class, :string)
   attr(:count, :integer, required: true)
-  attr(:image, :string, default: "https://media.cnn.com/api/v1/images/stellar/prod/190517103414-01-grumpy-cat-file-restricted.jpg?q=w_3000,h_2049,x_0,y_0,c_fill")
+
+  attr(:image, :string,
+    default:
+      "https://media.cnn.com/api/v1/images/stellar/prod/190517103414-01-grumpy-cat-file-restricted.jpg?q=w_3000,h_2049,x_0,y_0,c_fill"
+  )
 
   def render(assigns) do
     ~H"""
@@ -110,5 +106,4 @@ defmodule AmnesiaWeb.CountLive.Counter do
     new_counter = Counter.reset(socket.assigns.counter)
     assign(socket, counter: new_counter) |> assign(count: Counter.count(new_counter))
   end
-
 end
