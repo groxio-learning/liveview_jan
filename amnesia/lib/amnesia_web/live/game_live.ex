@@ -1,15 +1,16 @@
 defmodule AmnesiaWeb.GameLive do
-  alias Amnesia.Eraser
+  alias Amnesia.{Eraser, Library}
   use AmnesiaWeb, :live_view
 
   def mount(%{"id" => id}, _session, socket) do
     {:ok,
      socket
-     |> assign(eraser: eraser())}
+     |> assign(eraser: eraser(id))}
   end
 
-  defp eraser() do
-    %{title: "IT Crowd", text: "Did you try turning it on and off again?", steps: 3}
+  defp eraser(id) do
+    id
+    |> Library.get_prompt!()
     |> Eraser.new()
   end
 

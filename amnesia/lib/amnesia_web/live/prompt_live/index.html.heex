@@ -7,7 +7,7 @@
   </:actions>
 </.header>
 
-<.table id="prompts" rows={@prompts} row_click={&JS.navigate(~p"/prompts/#{&1}")}>
+<.table id="prompts" rows={@prompts} row_click={&JS.navigate(~p"/game/#{&1}")}>
   <:col :let={prompt} label="Title"><%= prompt.title %></:col>
   <:col :let={prompt} label="Text"><%= prompt.text %></:col>
   <:col :let={prompt} label="Steps"><%= prompt.steps %></:col>
