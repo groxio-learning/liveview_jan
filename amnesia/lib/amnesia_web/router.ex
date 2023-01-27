@@ -69,6 +69,11 @@ defmodule AmnesiaWeb.Router do
       live("/users/settings", UserSettingsLive, :edit)
       live("/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email)
       live("/game/:id", GameLive)
+      live "/prompts", PromptLive.Index, :index
+      live "/prompts/new", PromptLive.Index, :new
+      live "/prompts/:id/edit", PromptLive.Index, :edit
+      live "/prompts/:id", PromptLive.Show, :show
+      live "/prompts/:id/show/edit", PromptLive.Show, :edit
     end
   end
 

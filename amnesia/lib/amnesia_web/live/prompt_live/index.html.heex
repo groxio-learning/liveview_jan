@@ -1,0 +1,41 @@
+<.header>
+  Listing Prompts
+  <:actions>
+    <.link patch={~p"/prompts/new"}>
+      <.button>New Prompt</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="prompts" rows={@prompts} row_click={&JS.navigate(~p"/prompts/#{&1}")}>
+  <:col :let={prompt} label="Title"><%= prompt.title %></:col>
+  <:col :let={prompt} label="Text"><%= prompt.text %></:col>
+  <:col :let={prompt} label="Steps"><%= prompt.steps %></:col>
+  <:action :let={prompt}>
+    <div class="sr-only">
+      <.link navigate={~p"/prompts/#{prompt}"}>Show</.link>
+    </div>
+    <.link patch={~p"/prompts/#{prompt}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={prompt}>
+    <.link phx-click={JS.push("delete", value: %{id: prompt.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="prompt-modal"
+  show
+  on_cancel={JS.navigate(~p"/prompts")}
+>
+  <.live_component
+    module={AmnesiaWeb.PromptLive.FormComponent}
+    id={@prompt.id || :new}
+    title={@page_title}
+    action={@live_action}
+    prompt={@prompt}
+    navigate={~p"/prompts"}
+  />
+</.modal>
