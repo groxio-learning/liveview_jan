@@ -1,15 +1,17 @@
 defmodule Amnesia.Eraser do
   defstruct [:text, :plan]
 
-  def new(text, steps \\ 3) do
-    %__MODULE__{text: text, plan: generate_plan(text, steps)}
+  def new(opts) do
+    %__MODULE__{text: opts.text, plan: generate_plan(opts.text, opts.steps)}
   end
 
   def erase(%__MODULE__{text: text, plan: [step | steps]} = eraser) do
     chars_with_index = indexed_chars(text)
+
     new_text =
-      (for {index, str} <- chars_with_index, do: replace({index, str}, step))
-      |> Enum.join
+      for({index, str} <- chars_with_index, do: replace({index, str}, step))
+      |> Enum.join()
+
     %{eraser | text: new_text, plan: steps}
   end
 
@@ -22,7 +24,9 @@ defmodule Amnesia.Eraser do
   end
 
   defp generate_plan(text, steps) do
-    1..String.length(text) |> Enum.shuffle |> Enum.chunk_every(ceil(String.length(text) / steps) )
+    1..String.length(text)
+    |> Enum.shuffle()
+    |> Enum.chunk_every(ceil(String.length(text) / steps))
   end
 
   defp replace({index, str}, step) do
